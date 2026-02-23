@@ -4,15 +4,14 @@ public class PalindromeCheckerApp {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter a String: ");
         String a = input.nextLine();
-        boolean isPal = true;
 
-        for(int i = 0; i < a.length() / 2; i++) {
-            if (a.charAt(i) != a.charAt(a.length() - 1 - i)) {
-                isPal = false;
-                break;
-            }
+        String rev = "";
+
+        for(int i = a.length() - 1; i >= 0; i--) {
+            rev += a.charAt(i);
         }
-        if(isPal) {
+
+        if(a.equalsIgnoreCase(rev)) {
             System.out.println("The string you entered is a palindrome");
         } else {
             System.out.println("The string you entered is not a palindrome");
