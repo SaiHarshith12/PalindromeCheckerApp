@@ -4,14 +4,27 @@ public class PalindromeCheckerApp {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter a String: ");
         String a = input.nextLine();
-
-        String rev = "";
-
-        for(int i = a.length() - 1; i >= 0; i--) {
-            rev += a.charAt(i);
+        int left=0;
+        int right=a.length()-1;
+        String b="";
+        String c="";
+        if(a.length()%2!=0) {
+            for (int i = left; i <= a.length() / 2; i++) {
+                b += a.charAt(i);
+            }
+            for (int j = right; j >= a.length() / 2; j--) {
+                c += a.charAt(j);
+            }
         }
-
-        if(a.equalsIgnoreCase(rev)) {
+        else{
+            for (int i = left; i < a.length() / 2; i++) {
+                b += a.charAt(i);
+            }
+            for (int j = right; j >= a.length() / 2; j--) {
+                c += a.charAt(j);
+            }
+        }
+        if(b.equalsIgnoreCase(c)) {
             System.out.println("The string you entered is a palindrome");
         } else {
             System.out.println("The string you entered is not a palindrome");
