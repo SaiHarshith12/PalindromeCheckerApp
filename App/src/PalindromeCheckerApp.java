@@ -1,30 +1,39 @@
 import java.util.Scanner;
-import java.util.Stack;
-import java.util.Queue;
-import java.util.LinkedList;
+import java.util.Deque;
+import java.util.ArrayDeque;
 public class PalindromeCheckerApp {
-        public static void main(String[] args) {
+                public static boolean isPalindrome(String str) {
+                    Deque<Character> deque = new ArrayDeque<>();
 
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Enter a string: ");
-            String str = sc.nextLine();
+                    // Insert characters into deque
+                    for (int i = 0; i < str.length(); i++) {
+                        deque.addLast(str.charAt(i));
+                    }
 
-            Stack<Character> stack = new Stack<>();
-            Queue<Character> queue = new LinkedList<>();
-            for (int i = 0; i < str.length(); i++) {
-                stack.push(str.charAt(i));
-                queue.add(str.charAt(i));
-            }
-            boolean isPalindrome = true;
-            for (int i = 0; i < str.length(); i++) {
-                if (!stack.pop().equals(queue.remove())) {
-                    isPalindrome = false;
-                    break;
+                    // Compare front and rear
+                    while (deque.size() > 1) {
+                        char front = deque.removeFirst();
+                        char rear = deque.removeLast();
+
+                        if (front != rear) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+
+                public static void main(String[] args) {
+                    Scanner scanner = new Scanner(System.in);
+                    System.out.print("String to be checked: ");
+                    String input = scanner.next();
+
+                    if (isPalindrome(input)) {
+                        System.out.println("Palindrome");
+                    } else {
+                        System.out.println("Not a Palindrome");
+                    }
+
+                    scanner.close();
                 }
             }
-            if (isPalindrome)
-                System.out.println("Palindrome");
-            else
-                System.out.println("Not Palindrome");
-        }
-    }
