@@ -1,39 +1,30 @@
 import java.util.Scanner;
-import java.util.Deque;
-import java.util.ArrayDeque;
+import java.util.LinkedList;
 public class PalindromeCheckerApp {
-                public static boolean isPalindrome(String str) {
-                    Deque<Character> deque = new ArrayDeque<>();
-
-                    // Insert characters into deque
-                    for (int i = 0; i < str.length(); i++) {
-                        deque.addLast(str.charAt(i));
-                    }
-
-                    // Compare front and rear
-                    while (deque.size() > 1) {
-                        char front = deque.removeFirst();
-                        char rear = deque.removeLast();
-
-                        if (front != rear) {
-                            return false;
-                        }
-                    }
-
-                    return true;
-                }
-
-                public static void main(String[] args) {
-                    Scanner scanner = new Scanner(System.in);
-                    System.out.print("String to be checked: ");
-                    String input = scanner.next();
-
-                    if (isPalindrome(input)) {
-                        System.out.println("Palindrome");
-                    } else {
-                        System.out.println("Not a Palindrome");
-                    }
-
-                    scanner.close();
-                }
+    public static boolean isPalindrome(String str) {
+        LinkedList<Character> list = new LinkedList<>();
+        for (int i = 0; i < str.length(); i++) {
+            list.add(str.charAt(i));
+        }
+        int left = 0;
+        int right = list.size() - 1;
+        while (left < right) {
+            if (!list.get(left).equals(list.get(right))) {
+                return false;
             }
+            left++;
+            right--;
+        }
+        return true;
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a string: ");
+        String input = scanner.next();
+        if (isPalindrome(input)) {
+            System.out.println("Palindrome");
+        } else {
+            System.out.println("Not a Palindrome");
+        }
+    }
+}
