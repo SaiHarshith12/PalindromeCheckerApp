@@ -1,33 +1,24 @@
 import java.util.Scanner;
+import java.util.Stack;
 public class PalindromeCheckerApp {
-    public static void main(String[] args){
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter a String: ");
-        String a = input.nextLine();
-        int left=0;
-        int right=a.length()-1;
-        String b="";
-        String c="";
-        if(a.length()%2!=0) {
-            for (int i = left; i <= a.length() / 2; i++) {
-                b += a.charAt(i);
+        public static void main(String[] args) {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Enter a string: ");
+            String str = sc.nextLine();
+            Stack<Character> stack = new Stack<>();
+            for (int i = 0; i < str.length(); i++) {
+                stack.push(str.charAt(i));
             }
-            for (int j = right; j >= a.length() / 2; j--) {
-                c += a.charAt(j);
+            boolean isPalindrome = true;
+            for (int i = 0; i < str.length(); i++) {
+                if (str.charAt(i) != stack.pop()) {
+                    isPalindrome = false;
+                    break;
+                }
             }
-        }
-        else{
-            for (int i = left; i < a.length() / 2; i++) {
-                b += a.charAt(i);
-            }
-            for (int j = right; j >= a.length() / 2; j--) {
-                c += a.charAt(j);
-            }
-        }
-        if(b.equalsIgnoreCase(c)) {
-            System.out.println("The string you entered is a palindrome");
-        } else {
-            System.out.println("The string you entered is not a palindrome");
+            if (isPalindrome)
+                System.out.println("Palindrome");
+            else
+                System.out.println("Not Palindrome");
         }
     }
-}
