@@ -1,90 +1,47 @@
 import java.util.Scanner;
-    interface PalindromeStrategy {
-        boolean isPalindrome(String input);
-    }
-    class IterativePalindrome implements PalindromeStrategy {
-        @Override
-        public boolean isPalindrome(String input) {
-            String str = input.toLowerCase().replaceAll("[^a-z0-9]", "");
+public class PalindromeCheckerApp {
+    public static boolean iterativePalindrome(String str) {
+        str = str.toLowerCase().replaceAll("[^a-z0-9]", "");
+        int left = 0, right = str.length() - 1;
 
-            int left = 0;
-            int right = str.length() - 1;
-
-            while (left < right) {
-                if (str.charAt(left) != str.charAt(right)) {
-                    return false;
-                }
-                left++;
-                right--;
-            }
-            return true;
-        }
-    }
-    class RecursivePalindrome implements PalindromeStrategy {
-
-        @Override
-        public boolean isPalindrome(String input) {
-            String str = input.toLowerCase().replaceAll("[^a-z0-9]", "");
-            return check(str, 0, str.length() - 1);
-        }
-        private boolean check(String str, int left, int right) {
-            if (left >= right) {
-                return true;
-            }
-
-            if (str.charAt(left) != str.charAt(right)) {
+        while (left < right) {
+            if (str.charAt(left) != str.charAt(right))
                 return false;
-            }
-
-            return check(str, left + 1, right - 1);
+            left++;
+            right--;
         }
+        return true;
     }
-    class PalindromeContext {
-
-        private PalindromeStrategy strategy;
-
-        public void setStrategy(PalindromeStrategy strategy) {
-            this.strategy = strategy;
-        }
-        public boolean execute(String input) {
-            if (strategy == null) {
-                throw new IllegalStateException("Strategy not set!");
-            }
-            return strategy.isPalindrome(input);
-        }
+    public static boolean recursivePalindrome(String str, int left, int right) {
+        if (left >= right) return true;
+        if (str.charAt(left) != str.charAt(right)) return false;
+        return recursivePalindrome(str, left + 1, right - 1);
     }
-    public class PalindromeCheckerApp {
-        public static void main(String[] args) {
-            Scanner scanner = new Scanner(System.in);
-            PalindromeContext context = new PalindromeContext();
-            System.out.println("Choose Algorithm:");
-            System.out.println("1. Iterative");
-            System.out.println("2. Recursive");
-            System.out.print("Enter choice: ");
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a string: ");
+        String input = sc.nextLine();
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+        String cleaned = input.toLowerCase().replaceAll("[^a-z0-9]", "");
 
-            System.out.print("Enter a string: ");
-            String input = scanner.nextLine();
+        long start1 = System.nanoTime();
+        boolean result1 = iterativePalindrome(input);
+        long end1 = System.nanoTime();
+        long time1 = end1 - start1;
 
-            if (choice == 1) {
-                context.setStrategy(new IterativePalindrome());
-            }
-            else if (choice == 2) {
-                context.setStrategy(new RecursivePalindrome());
-            }
-            else {
-                System.out.println("Invalid choice!");
-                scanner.close();
-                return;
-            }
-            boolean result = context.execute(input);
-            if (result) {
-                System.out.println("Palindrome");
-            } else {
-                System.out.println("Not a Palindrome");
-            }
-            scanner.close();
-        }
+        long start2 = System.nanoTime();
+        boolean result2 = recursivePalindrome(cleaned, 0, cleaned.length() - 1);
+        long end2 = System.nanoTime();
+        long time2 = end2 - start2;
+
+        System.out.println("\nIterative Time: " + time1 + " ns");
+        System.out.println("Recursive Time: " + time2 + " ns");
+
+        if (time1 < time2)
+            System.out.println("Iterative is faster.");
+        else
+            System.out.println("Recursive is faster.");
+
+        sc.close();
     }
+}
