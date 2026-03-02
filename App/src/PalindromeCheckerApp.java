@@ -1,27 +1,27 @@
 import java.util.Scanner;
 public class PalindromeCheckerApp {
-        public static boolean isPalindrome(String str, int left, int right) {
-            // Base case
-            if (left >= right) {
-                return true;
+        public static boolean isPalindrome(String str) {
+            str = str.toLowerCase().replace(" ", "");
+            int left = 0;
+            int right = str.length() - 1;
+
+            while (left < right) {
+                if (str.charAt(left) != str.charAt(right)) {
+                    return false;
+                }
+                left++;
+                right--;
             }
 
-            // If characters don't match
-            if (str.charAt(left) != str.charAt(right)) {
-                return false;
-            }
-
-            // Recursive call
-            return isPalindrome(str, left + 1, right - 1);
+            return true;
         }
-
         public static void main(String[] args) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("Enter a string: ");
-            String input = scanner.next();
+            String input = scanner.nextLine();  // nextLine to allow spaces
 
-            if (isPalindrome(input, 0, input.length() - 1)) {
-                System.out.println("It is a Palindrome");
+            if (isPalindrome(input)) {
+                System.out.println("Palindrome");
             } else {
                 System.out.println("Not a Palindrome");
             }
